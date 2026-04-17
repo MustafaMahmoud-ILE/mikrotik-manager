@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, 
                                QLabel, QPushButton, QProgressBar, QGridLayout, QFrame)
-from PySide6.QtCore import Qt, Signal, QThread, QTimer, QPropertyAnimation, QEasingCurve
+from PySide6.QtCore import Qt, Signal, QThread, QTimer, QPropertyAnimation, QEasingCurve, QEvent
 from PySide6.QtGui import QColor, QFont
 import time
 
@@ -66,6 +66,14 @@ class DashboardWindow(FramelessWindow):
         self.quota_timer = QTimer(self)
         self.quota_timer.timeout.connect(self.refresh_data)
         self.quota_timer.start(60000) # every 60 seconds
+
+    def changeEvent(self, event):
+        if event.type() == QEvent.WindowStateChange:
+            if self.isMinimized():
+                # Use a tiny delay to ensure Windows finishes the minimize animation 
+                # before we hide the window from the taskbar completely.
+                QTimer.singleShot(0, self.hide)
+        super().changeEvent(event)
 
     def init_ui(self):
         main_widget = QWidget()

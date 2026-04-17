@@ -15,6 +15,7 @@ from ui.dashboard_window import DashboardWindow
 from utils.single_instance import check_single_instance
 from utils.startup_manager import add_to_startup
 from utils.shortcut_manager import create_shortcuts
+from utils.tray_manager import TrayManager
 # Configure Logging
 if getattr(sys, 'frozen', False):
     # If running as an EXE
@@ -66,6 +67,11 @@ class MikroTikApp:
         self.core = CoreManager()
         self.login_win = None
         self.dashboard_win = None
+        
+        # Initialize Tray (but keep hidden until logged in)
+        self.tray = TrayManager(icon_path, self.app)
+        self.tray.show_requested.connect(self.restore_window)
+        self.tray.exit_requested.connect(self.app.quit)
 
     def run(self):
         # Single Instance Check
@@ -159,11 +165,24 @@ class MikroTikApp:
         
         if self.login_win:
             self.login_win.close()
+        
+        # Show tray when dashboard is active
+        self.tray.show()
         self.dashboard_win.show()
+
+    def restore_window(self):
+        if self.dashboard_win:
+            self.dashboard_win.showNormal()
+            self.dashboard_win.activateWindow()
+        elif self.login_win:
+            self.login_win.showNormal()
+            self.login_win.activateWindow()
 
     def handle_logout(self):
         if self.dashboard_win:
             self.dashboard_win.close()
+        # Hide tray on logout
+        self.tray.hide()
         self.login_win = LoginWindow(self.core)
         self.login_win.login_successful.connect(self.show_dashboard)
         self.login_win.show()

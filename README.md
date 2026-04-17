@@ -1,37 +1,49 @@
-# MikroTik Manager
+# MikroTik Hotspot Manager
 
-A professional desktop application using Python and PySide6 that allows MikroTik hotspot users to manage their profiles and enable auto-login functionality.
+A professional, modern, and frameless desktop application for managing MikroTik hotspot users. Built with Python and PySide6, featuring a skeuomorphic dark-themed UI and robust backend integration.
 
-## Project Layout
+## ✨ Latest Features
 
-```text
-mikrotik_manager/
-├── main.py                 # Application entry point
-├── ui/
-│   ├── login_window.py     # Login UI
-│   ├── dashboard_window.py # Main dashboard UI
-│   ├── password_dialog.py  # Password change dialog
-│   └── styles.py           # QSS stylesheets
-├── core/
-│   ├── ssh_manager.py      # SSH communication with router
-│   ├── hotspot_manager.py  # Hotspot login/logout automation
-│   ├── quota_manager.py    # Quota calculation
-│   └── config_manager.py   # App configuration
-└── utils/
-    ├── single_instance.py  # Single instance check
-    ├── startup_manager.py  # Windows startup integration
-    └── validators.py       # Input validation
-```
+- **System Tray Support**: The app now stays active in the background when minimized, providing seamless quota monitoring.
+- **Smart Installation**: Automatically installs itself to `%APPDATA%` and creates shortcuts on the **Desktop** and **Start Menu**.
+- **Auto-Login & Quota Tracking**: Real-time quota monitoring with a 30-second auto-reauthentication cycle.
+- **Profile Management**: Switch between profiles (Gaming, Balanced, etc.) with automated hotspot session management.
+- **Modern UI**: Custom frameless windows, smooth animations, and a polished dark theme with accent lightning.
 
-## Adding Custom Icons
+## 🚀 Installation & Deployment
 
-The app is configured to use `ui/assets/mikrotik-light.png` as its window and taskbar icon. To bundle this icon into the `.exe` file:
+### For Developers
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MustafaMahmoud-ILE/mikrotik-manager.git
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the application:
+   ```bash
+   python main.py
+   ```
 
+### For Production (EXE)
+The project is configured for `PyInstaller`. To build the executable:
 ```bash
-# Using the PNG as the executable icon (PyInstaller will attempt conversion)
-pyinstaller --noconfirm --onedir --windowed --icon="ui/assets/mikrotik-light.png" main.py
+pyinstaller --noconfirm --onedir --windowed --name "mikrotik-manager" --icon="ui/assets/mikrotik-light.png" --add-data "ui/assets;ui/assets" main.py
 ```
 
-## Development Requirements
-- Python 3.9+
-- `pip install -r requirements.txt`
+## 📂 Project Structure
+
+- `core/`: Backend logic (SSH, Hotspot, Config, and Quota management).
+- `ui/`: PySide6 windows, custom styles, and assets.
+- `utils/`: System utilities (Tray management, Shortcut creation, Startup logic).
+- `dist/`: Ready-to-use production builds.
+
+## 🛠️ Requirements
+- Python 3.10+
+- PySide6
+- Paramiko (for SSH management)
+- Requests (for Hotspot API)
+
+---
+*Developed for Banna's Home Network.*
