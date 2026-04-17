@@ -5,6 +5,7 @@ A professional, modern, and frameless desktop application for managing MikroTik 
 ## ✨ Latest Features
 
 - **System Tray Support**: The app now stays active in the background when minimized, providing seamless quota monitoring.
+- **Gamer Mode**: Ultra-fast **5-second** auto-reauthentication cycle to minimize downtime during online gaming sessions.
 - **Smart Installation**: Automatically installs itself to `%APPDATA%` and creates shortcuts on the **Desktop** and **Start Menu**.
 - **Auto-Login & Quota Tracking**: Real-time quota monitoring with a 30-second auto-reauthentication cycle.
 - **Profile Management**: Switch between profiles (Gaming, Balanced, etc.) with automated hotspot session management.

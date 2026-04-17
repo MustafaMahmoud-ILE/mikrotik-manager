@@ -61,7 +61,7 @@ class DashboardWindow(FramelessWindow):
         # Setup auto-login monitor thread and timer for quota refresh
         self.monitor_timer = QTimer(self)
         self.monitor_timer.timeout.connect(self.check_auto_login)
-        self.monitor_timer.start(30000) # every 30 seconds
+        self.monitor_timer.start(5000) # every 5 seconds (Gamer Mode)
 
         self.quota_timer = QTimer(self)
         self.quota_timer.timeout.connect(self.refresh_data)
