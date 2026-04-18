@@ -51,14 +51,6 @@ jobs:
       - name: Install Buildozer
         run: pip install --user buildozer
 
-      - name: Build APK with Buildozer
-        run: |
-          pwd
-          ls -R
-          cd android_version && buildozer -v android debug
-        env:
-          # Accept Android SDK licenses automatically
-          APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
