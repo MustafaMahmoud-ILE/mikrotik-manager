@@ -7,6 +7,12 @@ title = MikroLink
 package.name = mikrolink
 
 
+# (str) Package domain (needed for android/ios packaging)
+package.domain = org.mikroti.manager
+
+# (str) Application version
+version = 1.0.1
+
 # (str) Source code where the main.py live
 source.dir = .
 
