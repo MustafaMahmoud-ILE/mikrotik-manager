@@ -21,8 +21,6 @@ wheels/
 .installed.cfg
 *.egg
 
-# PyInstaller
-*.spec
 
 # Logs
 *.log
