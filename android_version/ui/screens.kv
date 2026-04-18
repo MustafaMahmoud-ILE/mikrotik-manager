@@ -1,0 +1,193 @@
+MDScreenManager:
+    LoginScreen:
+    DashboardScreen:
+    SettingsScreen:
+
+<LoginScreen>:
+    name: "login"
+    MDCard:
+        orientation: "vertical"
+        padding: "20dp"
+        spacing: "15dp"
+        size_hint: None, None
+        size: "320dp", "480dp"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        elevation: 4
+        shadow_color: app.theme_cls.primary_color
+        
+        MDLabel:
+            text: "MikroLink"
+            font_style: "H4"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            bold: True
+            
+        MDLabel:
+            text: "Your Gaming Network, Powered"
+            font_style: "Caption"
+            halign: "center"
+            theme_text_color: "Secondary"
+
+        MDTextField:
+            id: user
+            hint_text: "Username"
+            mode: "round"
+            icon_left: "account"
+            
+        MDTextField:
+            id: pw
+            hint_text: "Password"
+            mode: "round"
+            password: True
+            icon_left: "key-variant"
+
+        MDTextField:
+            id: ip
+            hint_text: "Router IP"
+            text: "10.0.0.1"
+            mode: "round"
+            icon_left: "router-wireless"
+
+        MDFillRoundFlatButton:
+            text: "AUTHENTICATE"
+            pos_hint: {"center_x": .5}
+            size_hint_x: .8
+            on_release: app.handle_login(user.text, pw.text, ip.text)
+            
+        MDLabel:
+            text: "Auto-detecting router..."
+            font_style: "Overline"
+            halign: "center"
+            theme_text_color: "Hint"
+
+<DashboardScreen>:
+    name: "dashboard"
+    MDBoxLayout:
+        orientation: "vertical"
+        
+        MDTopAppBar:
+            title: "MikroLink Dashboard"
+            elevation: 2
+            right_action_items: [["cog", lambda x: setattr(app.root, 'current', 'settings')]]
+            
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: "20dp"
+                spacing: "20dp"
+                adaptive_height: True
+
+                # Quota Card
+                MDCard:
+                    orientation: "vertical"
+                    padding: "20dp"
+                    spacing: "10dp"
+                    radius: [20,]
+                    adaptive_height: True
+                    elevation: 3
+                    
+                    MDLabel:
+                        text: "Data Quota"
+                        font_style: "H6"
+                        bold: True
+                    
+                    MDBoxLayout:
+                        spacing: "20dp"
+                        adaptive_height: True
+                        
+                        MDIcon:
+                            icon: "signal-variant"
+                            font_size: "48sp"
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            MDLabel:
+                                text: app.quota_text
+                                font_style: "H4"
+                                bold: True
+                            MDLabel:
+                                text: "Profile: " + app.current_profile.upper()
+                                theme_text_color: "Secondary"
+                    
+                    MDProgressBar:
+                        value: app.quota_percent
+                        color: app.theme_cls.primary_color
+
+                # Status Cards
+                MDGridLayout:
+                    cols: 2
+                    spacing: "15dp"
+                    adaptive_height: True
+                    
+                    MDCard:
+                        orientation: "vertical"
+                        padding: "15dp"
+                        adaptive_height: True
+                        radius: [15,]
+                        MDLabel:
+                            text: "Status"
+                            font_style: "Caption"
+                        MDLabel:
+                            text: app.connection_status
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+                            bold: True
+
+                    MDCard:
+                        orientation: "vertical"
+                        padding: "15dp"
+                        adaptive_height: True
+                        radius: [15,]
+                        MDLabel:
+                            text: "Gamer Mode"
+                            font_style: "Caption"
+                        MDLabel:
+                            text: "ACTIVE" if app.is_auto_login else "OFF"
+                            theme_text_color: "Custom"
+                            text_color: (0, 1, 0, 1) if app.is_auto_login else (0.5, 0.5, 0.5, 1)
+                            bold: True
+
+                MDRectangleFlatIconButton:
+                    icon: "logout"
+                    text: "DISCONNECT SESSION"
+                    pos_hint: {"center_x": .5}
+                    theme_text_color: "Custom"
+                    text_color: "red"
+                    line_color: "red"
+                    on_release: app.logout()
+
+<SettingsScreen>:
+    name: "settings"
+    MDBoxLayout:
+        orientation: "vertical"
+        
+        MDTopAppBar:
+            title: "Settings"
+            left_action_items: [["arrow-left", lambda x: setattr(app.root, 'current', 'dashboard')]]
+        
+        MDList:
+            OneLineIconListItem:
+                text: "Auto-Login (Gamer Mode)"
+                IconLeftWidget:
+                    icon: "controller-classic"
+                MDSwitch:
+                    active: app.is_auto_login
+                    pos_hint: {"center_y": .5}
+                    on_active: app.toggle_auto_login(self.active)
+
+            OneLineIconListItem:
+                text: "Dark Mode"
+                IconLeftWidget:
+                    icon: "theme-light-dark"
+                MDSwitch:
+                    active: True
+                    disabled: True
+                    pos_hint: {"center_y": .5}
+
+            OneLineIconListItem:
+                text: "About MikroLink"
+                IconLeftWidget:
+                    icon: "information"

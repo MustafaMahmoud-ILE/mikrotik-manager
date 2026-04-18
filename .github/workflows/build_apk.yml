@@ -1,0 +1,65 @@
+name: Build MikroLink APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/set-up-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            libffi-dev \
+            libssl-dev \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            zlib1g-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            libreadline-dev \
+            libsqlite3-dev \
+            libgdbm-dev \
+            libdb5.3-dev \
+            libbz2-dev \
+            libexpat1-dev \
+            liblzma-dev \
+            tk-dev \
+            libffi-dev \
+            libssl-dev \
+            zip \
+            unzip \
+            openjdk-17-jdk
+
+      - name: Install Buildozer
+        run: pip install --user buildozer
+
+      - name: Build APK with Buildozer
+        working-directory: android_version
+        run: |
+          # Use the non-interactive mode for Buildozer
+          buildozer -v android debug
+        env:
+          # Accept Android SDK licenses automatically
+          APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mikrolink-apk
+          path: android_version/bin/*.apk
