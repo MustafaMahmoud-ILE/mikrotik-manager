@@ -44,6 +44,8 @@ jobs:
             tk-dev \
             libffi-dev \
             libssl-dev \
+            libtool-bin \
+            m4 \
             zip \
             unzip \
             openjdk-17-jdk

@@ -19,9 +19,6 @@ source.dir = .
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,json
 
-# (list) Application requirements
-# comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.2.1,kivymd==1.1.1,paramiko,cryptography,requests,oscpy,urllib3,certifi,idna,charset-normalizer
 
 # (str) Custom source folders for requirements
 # сад_folder = ../libs
