@@ -50,7 +50,7 @@ jobs:
 
       - name: Build Android APK
         run: |
-          pip install --user buildozer
+          pip install --user buildozer cython
           cd android_version
           /home/runner/.local/bin/buildozer -v android debug
         env:
